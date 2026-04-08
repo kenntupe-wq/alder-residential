@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alder Residential Services — Curb Logistics Division</title>
+    <title>ALDER RESIDENTIAL — Curb Logistics Division</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         brand: {
-                            black: '#0a0a0a',
-                            dark: '#111111',
+                            black: '#080808',
+                            dark: '#0e0e0e',
                             crimson: '#c0192c',
-                            crimsonHover: '#a01525',
-                            border: '#2a2f38',
+                            slate: '#1e2329',
+                            border: '#1f242d',
                         }
                     },
                     fontFamily: {
@@ -30,174 +30,265 @@
         }
     </script>
     <style>
-        body { background: #0a0a0a; color: #e5e7eb; font-family: 'DM Sans', sans-serif; scroll-behavior: smooth; }
-        .grid-bg { background-image: linear-gradient(rgba(192,25,44,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(192,25,44,0.05) 1px, transparent 1px); background-size: 60px 60px; }
-        .tier-card { border: 1px solid #2a2f38; background: #111; transition: all 0.3s; }
-        .tier-card:hover { border-color: #c0192c; transform: translateY(-5px); }
-        .btn-primary { background: #c0192c; transition: background 0.2s; }
-        .btn-primary:hover { background: #a01525; }
-        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        body { background: #080808; color: #e5e7eb; font-family: 'DM Sans', sans-serif; scroll-behavior: smooth; }
+        .grid-bg { background-image: radial-gradient(circle at 2px 2px, rgba(192,25,44,0.15) 1px, transparent 0); background-size: 40px 40px; }
+        .glass { background: rgba(14, 14, 14, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(192,25,44,0.1); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
+        .glow-red { box-shadow: 0 0 20px rgba(192,25,44,0.2); }
+        @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; animation: pulse-red 2s infinite; }
     </style>
 </head>
-<body>
+<body class="grid-bg">
 
-<nav class="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-brand-border">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-            <div class="w-2 h-7 bg-brand-crimson"></div>
-            <span class="font-display text-xl tracking-wider text-white">ALDER <span class="text-brand-crimson">RESIDENTIAL</span></span>
+<nav class="fixed top-0 w-full z-50 glass border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-1.5 h-8 bg-brand-crimson glow-red"></div>
+            <span class="font-display text-2xl tracking-widest text-white">ALDER <span class="text-brand-crimson">RESIDENTIAL</span></span>
         </div>
-        <div class="hidden md:flex gap-8 text-[0.7rem] font-bold uppercase tracking-widest text-gray-400">
-            <a href="#services" class="hover:text-white transition">Services</a>
-            <a href="#junk" class="hover:text-white transition">Junk Removal</a>
-            <a href="#contact" class="hover:text-white transition">Contact</a>
+        <div class="hidden md:flex gap-10 text-[0.65rem] font-bold uppercase tracking-[0.3em] text-gray-400">
+            <a href="#about" class="hover:text-brand-crimson transition">Origin</a>
+            <a href="#services" class="hover:text-brand-crimson transition">Valet</a>
+            <a href="#cities" class="hover:text-brand-crimson transition">Coverage</a>
+            <a href="#contact" class="hover:text-brand-crimson transition">Dispatch</a>
         </div>
     </div>
 </nav>
 
-<section class="grid-bg min-h-screen flex items-center pt-20 px-6">
-    <div class="max-w-7xl mx-auto w-full">
-        <div class="max-w-3xl">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="w-10 h-[1px] bg-brand-crimson"></div>
-                <span class="font-display text-brand-crimson tracking-widest text-sm">Curb Logistics & Junk Removal</span>
+<section class="min-h-screen flex items-center pt-24 px-6 relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(192,25,44,0.08)_0%,_transparent_70%)] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto w-full relative">
+        <div class="flex flex-col items-center text-center">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-[1px] w-12 bg-brand-crimson"></div>
+                <span class="font-display text-brand-crimson tracking-[0.4em] text-sm">ESTABLISHED 2023 — UTAH DIVISION</span>
+                <div class="h-[1px] w-12 bg-brand-crimson"></div>
             </div>
-            <h1 class="font-display text-6xl md:text-8xl leading-none text-white mb-8">
-                ELITE HOME<br/><span class="text-brand-crimson">LOGISTICS</span><br/>FOR UTAH
+            <h1 class="font-display text-7xl md:text-9xl leading-[0.9] text-white mb-10">
+                REDESIGNING THE<br/><span class="text-brand-crimson">LAST YARD.</span>
             </h1>
-            <p class="text-gray-400 text-lg font-light leading-relaxed mb-10 max-w-xl">
-                From weekly bin valet to full-scale junk removal. We handle the heavy lifting so you don't have to. Professional, uniformed, and always on time.
+            <p class="text-gray-400 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-2xl">
+                The premier Curb Logistics provider for the Salt Lake Valley. We solve property management through precision field execution and technological reliability.
             </p>
-            <div class="flex gap-4">
-                <a href="#contact" class="btn-primary px-8 py-4 text-xs font-bold uppercase tracking-widest text-white">Get a Quote</a>
-                <a href="tel:3852560204" class="border border-brand-crimson px-8 py-4 text-xs font-bold uppercase tracking-widest text-brand-crimson hover:bg-brand-crimson hover:text-white transition">Call 24/7 Hotline</a>
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="#contact" class="bg-brand-crimson px-10 py-5 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white glow-red hover:bg-brand-crimsonHover transition">Initiate Quote</a>
+                <a href="tel:3852560204" class="glass px-10 py-5 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white hover:bg-white/5 transition">24/7 Hotline</a>
             </div>
         </div>
     </div>
 </section>
 
-<section id="services" class="py-24 px-6 bg-brand-dark">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <span class="font-display text-brand-crimson tracking-widest">Monthly Plans</span>
-            <h2 class="font-display text-5xl text-white mt-4">VALET PRICING</h2>
-            <p class="text-gray-500 mt-4">All plans include <span class="text-white font-bold">1 Free Bin Deep-Clean</span> per year.</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="tier-card p-10 reveal">
-                <h3 class="font-display text-2xl text-white mb-2">RESIDENTIAL VALET</h3>
-                <div class="text-4xl font-display text-brand-crimson mb-6">$35<span class="text-sm text-gray-500 font-body">/mo</span></div>
-                <ul class="text-gray-400 text-sm space-y-4 mb-10">
-                    <li>• Weekly bin-to-curb service</li>
-                    <li>• Post-collection return</li>
-                    <li>• Up to 2 bins included</li>
-                    <li class="text-white font-semibold">• 1 Free Annual Deep Clean</li>
-                </ul>
-                <a href="#contact" class="block text-center py-3 border border-gray-700 text-[0.7rem] font-bold uppercase tracking-widest hover:border-brand-crimson transition">Select Plan</a>
-            </div>
-
-            <div class="tier-card p-10 reveal border-brand-crimson bg-gradient-to-br from-brand-dark to-black relative">
-                <div class="absolute -top-3 left-10 bg-brand-crimson text-[0.6rem] font-bold px-3 py-1">MOST POPULAR</div>
-                <h3 class="font-display text-2xl text-white mb-2">SENIOR ASSISTANCE</h3>
-                <div class="text-4xl font-display text-brand-crimson mb-6">$25<span class="text-sm text-gray-500 font-body">/mo</span></div>
-                <ul class="text-gray-400 text-sm space-y-4 mb-10">
-                    <li>• Full Valet Service</li>
-                    <li>• Side-gate/Garage access</li>
-                    <li>• Family status notifications</li>
-                    <li class="text-white font-semibold">• 1 Free Annual Deep Clean</li>
-                </ul>
-                <a href="#contact" class="block text-center py-3 btn-primary text-[0.7rem] font-bold uppercase tracking-widest text-white">Select Plan</a>
-            </div>
-
-            <div class="tier-card p-10 reveal">
-                <h3 class="font-display text-2xl text-white mb-2">STR LOGISTICS</h3>
-                <div class="text-4xl font-display text-brand-crimson mb-6">$55<span class="text-sm text-gray-500 font-body">/mo</span></div>
-                <ul class="text-gray-400 text-sm space-y-4 mb-10">
-                    <li>• Calendar-synced service</li>
-                    <li>• Airbnb/Rental specialty</li>
-                    <li>• Multi-property support</li>
-                    <li class="text-white font-semibold">• 1 Free Annual Deep Clean</li>
-                </ul>
-                <a href="#contact" class="block text-center py-3 border border-gray-700 text-[0.7rem] font-bold uppercase tracking-widest hover:border-brand-crimson transition">Select Plan</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="junk" class="py-24 px-6 bg-black relative overflow-hidden">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center gap-16">
-        <div class="flex-1 min-w-[300px] reveal">
-            <span class="font-display text-brand-crimson tracking-widest">Expansion Services</span>
-            <h2 class="font-display text-6xl text-white mt-4 leading-none">MOVING &<br/>JUNK REMOVAL</h2>
-            <p class="text-gray-400 mt-8 leading-relaxed font-light">
-                Cleaning out a garage or moving houses? Alder’s specialized field crew handles heavy junk removal and moving logistics. We provide the muscle and the truck.
-            </p>
-            <div class="mt-10 flex gap-6">
-                <div>
-                    <div class="font-display text-3xl text-white">SAME-DAY</div>
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Availability</div>
-                </div>
-                <div class="w-[1px] bg-brand-border"></div>
-                <div>
-                    <div class="font-display text-3xl text-white">FLAT-RATE</div>
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Transparent Pricing</div>
-                </div>
-            </div>
-        </div>
-        <div class="flex-1 min-w-[300px] bg-brand-dark p-12 border border-brand-border reveal">
-            <h4 class="font-display text-2xl text-white mb-6">Request a Removal Quote</h4>
-            <p class="text-gray-500 text-sm mb-8">Send us a description of the items, and our team will text you an estimate within 15 minutes.</p>
-            <a href="sms:3852560204?body=I%20need%20a%20quote%20for%20junk%20removal." class="btn-primary w-full block text-center py-4 text-[0.7rem] font-bold uppercase tracking-widest text-white">Text for Quote</a>
-        </div>
-    </div>
-</section>
-
-<section id="contact" class="py-24 px-6 bg-brand-dark">
-    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
+<section id="about" class="py-32 px-6 bg-brand-dark/50">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
         <div class="reveal">
-            <span class="font-display text-brand-crimson tracking-widest uppercase">24/7 Hotline</span>
-            <h2 class="font-display text-5xl text-white mt-4 mb-8">LET'S GET STARTED</h2>
-            <div class="space-y-6">
-                <a href="tel:3852560204" class="block p-6 bg-black border border-brand-border hover:border-brand-crimson transition group">
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-2">Phone / Text</div>
-                    <div class="font-display text-3xl text-white group-hover:text-brand-crimson">(385) 256-0204</div>
-                </a>
-                <div class="flex gap-4">
-                    <span class="px-3 py-1 bg-brand-crimson/10 text-brand-crimson text-[0.6rem] font-bold uppercase tracking-tighter border border-brand-crimson/20">West Jordan</span>
-                    <span class="px-3 py-1 bg-brand-crimson/10 text-brand-crimson text-[0.6rem] font-bold uppercase tracking-tighter border border-brand-crimson/20">South Jordan</span>
-                    <span class="px-3 py-1 bg-brand-crimson/10 text-brand-crimson text-[0.6rem] font-bold uppercase tracking-tighter border border-brand-crimson/20">Draper</span>
-                </div>
+            <span class="font-display text-brand-crimson tracking-[0.3em] text-sm">OUR ORIGIN</span>
+            <h2 class="font-display text-5xl md:text-6xl text-white mt-6 mb-8 leading-none">BUILT ON<br/>PRECISION.</h2>
+            <p class="text-gray-400 font-light leading-loose text-lg mb-8">
+                Founded in <span class="text-white font-medium">2023</span>, Alder Residential was created to fill a critical gap in high-end property logistics. We realized that while home automation was advancing, the "physical last yard"—managing waste logistics and driveway safety—remained a manual burden.
+            </p>
+            <p class="text-gray-400 font-light leading-loose text-lg">
+                What started as a specialized pilot in West Jordan has evolved into the Salt Lake Valley's most reliable valet network, applying corporate field-tech standards to every driveway we service.
+            </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 reveal">
+            <div class="glass p-8 flex flex-col justify-center text-center">
+                <div class="text-brand-crimson font-display text-4xl mb-2">2023</div>
+                <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Year Founded</div>
+            </div>
+            <div class="glass p-8 flex flex-col justify-center text-center">
+                <div class="text-white font-display text-4xl mb-2">1,500+</div>
+                <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Routes Managed</div>
+            </div>
+            <div class="glass p-8 flex flex-col justify-center text-center">
+                <div class="text-white font-display text-4xl mb-2">100%</div>
+                <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Reliability Rate</div>
+            </div>
+            <div class="glass p-8 flex flex-col justify-center text-center">
+                <div class="text-brand-crimson font-display text-4xl mb-2">FIELD-PRO</div>
+                <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Certified Techs</div>
             </div>
         </div>
-        <div class="bg-black p-10 border border-brand-border reveal">
-            <form onsubmit="return false">
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <input type="text" placeholder="First Name" class="bg-brand-dark border border-brand-border p-3 text-sm focus:border-brand-crimson outline-none">
-                    <input type="text" placeholder="Last Name" class="bg-brand-dark border border-brand-border p-3 text-sm focus:border-brand-crimson outline-none">
+    </div>
+</section>
+
+<section id="cities" class="py-32 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 reveal">
+            <div>
+                <span class="font-display text-brand-crimson tracking-[0.3em]">GEOGRAPHIC COVERAGE</span>
+                <h2 class="font-display text-5xl text-white mt-4 leading-none">ACTIVE SERVICE AREAS</h2>
+            </div>
+            <div class="text-gray-500 text-sm max-w-sm">
+                Our logistics network is currently operational in 7 strategic zones across the South Valley.
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+            <div class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition">
+                <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">WEST JORDAN</span>
+                <div class="status-dot"></div>
+            </div>
+            <div class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition">
+                <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">SOUTH JORDAN</span>
+                <div class="status-dot"></div>
+            </div>
+            <div class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition">
+                <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">DRAPER</span>
+                <div class="status-dot"></div>
+            </div>
+            <div class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition">
+                <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">SANDY</span>
+                <div class="status-dot"></div>
+            </div>
+            <div class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition">
+                <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">RIVERTON</span>
+                <div class="status-dot"></div>
+            </div>
+            <div class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition">
+                <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">HERRIMAN</span>
+                <div class="status-dot"></div>
+            </div>
+            <div class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition">
+                <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">DAYBREAK</span>
+                <div class="status-dot"></div>
+            </div>
+            <div class="glass p-6 flex items-center justify-center bg-brand-crimson/5 border-dashed">
+                <span class="font-display text-sm tracking-[0.2em] text-brand-crimson">EXPANDING Q3</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services" class="py-32 px-6 bg-brand-dark/50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20 reveal">
+            <span class="font-display text-brand-crimson tracking-[0.3em]">DIVISION TIERS</span>
+            <h2 class="font-display text-6xl text-white mt-4">VALET PLANS</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass p-12 reveal relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-brand-crimson/5 -rotate-45 translate-x-16 -translate-y-16 group-hover:bg-brand-crimson/10 transition"></div>
+                <h3 class="font-display text-3xl text-white mb-4">RESIDENTIAL</h3>
+                <div class="text-5xl font-display text-brand-crimson mb-8">$35<span class="text-sm text-gray-600 font-body">/MO</span></div>
+                <ul class="text-gray-400 text-sm space-y-5 mb-12">
+                    <li class="flex items-center gap-3">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> Weekly Bin Valet
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> Post-Collection Return
+                    </li>
+                    <li class="flex items-center gap-3 text-white">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> 1 FREE ANNUAL CLEAN
+                    </li>
+                </ul>
+                <a href="#contact" class="block w-full text-center py-4 border border-brand-border text-[0.65rem] font-bold uppercase tracking-[0.2em] hover:border-brand-crimson transition">Select Tier</a>
+            </div>
+
+            <div class="glass p-12 reveal border-brand-crimson/50 glow-red transform md:scale-105 z-10 bg-gradient-to-br from-brand-dark to-black">
+                <div class="absolute top-0 left-0 bg-brand-crimson text-[0.6rem] font-bold px-4 py-1.5 uppercase tracking-widest">Field Tech Choice</div>
+                <h3 class="font-display text-3xl text-white mb-4">SENIOR / ASSIST</h3>
+                <div class="text-5xl font-display text-brand-crimson mb-8">$25<span class="text-sm text-gray-600 font-body">/MO</span></div>
+                <ul class="text-gray-400 text-sm space-y-5 mb-12">
+                    <li class="flex items-center gap-3">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> Premium Care Standards
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> Family Status Alerts
+                    </li>
+                    <li class="flex items-center gap-3 text-white">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> 1 FREE ANNUAL CLEAN
+                    </li>
+                </ul>
+                <a href="#contact" class="block w-full text-center py-4 bg-brand-crimson text-[0.65rem] font-bold uppercase tracking-[0.2em] text-white hover:bg-brand-crimsonHover transition">Select Tier</a>
+            </div>
+
+            <div class="glass p-12 reveal">
+                <h3 class="font-display text-3xl text-white mb-4">STR LOGISTICS</h3>
+                <div class="text-5xl font-display text-brand-crimson mb-8">$55<span class="text-sm text-gray-600 font-body">/MO</span></div>
+                <ul class="text-gray-400 text-sm space-y-5 mb-12">
+                    <li class="flex items-center gap-3">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> Calendar Integration
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> Guest Privacy Shield
+                    </li>
+                    <li class="flex items-center gap-3 text-white">
+                        <div class="w-1 h-1 bg-brand-crimson"></div> 1 FREE ANNUAL CLEAN
+                    </li>
+                </ul>
+                <a href="#contact" class="block w-full text-center py-4 border border-brand-border text-[0.65rem] font-bold uppercase tracking-[0.2em] hover:border-brand-crimson transition">Select Tier</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="py-32 px-6 relative">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
+        <div class="reveal">
+            <span class="font-display text-brand-crimson tracking-[0.3em] uppercase">Communication Portal</span>
+            <h2 class="font-display text-6xl text-white mt-6 mb-10">CONNECT WITH<br/>DISPATCH.</h2>
+            <div class="space-y-6">
+                <a href="tel:3852560204" class="glass p-8 flex flex-col group transition hover:border-brand-crimson">
+                    <span class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-3">24/7 Field Hotline</span>
+                    <span class="font-display text-4xl text-white group-hover:text-brand-crimson transition">(385) 256-0204</span>
+                </a>
+                <a href="sms:3852560204?body=I%20need%20a%20logistics%20quote%20for%20my%20home." class="glass p-8 flex flex-col group transition hover:border-brand-crimson">
+                    <span class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-3">Direct Text Support</span>
+                    <span class="font-display text-4xl text-white group-hover:text-brand-crimson transition">TEXT FOR QUOTE</span>
+                </a>
+            </div>
+        </div>
+        <div class="glass p-12 reveal">
+            <form onsubmit="return false" class="space-y-6">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[0.6rem] text-gray-500 uppercase tracking-widest">First Name</label>
+                        <input type="text" class="bg-brand-black border border-brand-border p-4 text-sm focus:border-brand-crimson outline-none transition">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Last Name</label>
+                        <input type="text" class="bg-brand-black border border-brand-border p-4 text-sm focus:border-brand-crimson outline-none transition">
+                    </div>
                 </div>
-                <input type="text" placeholder="Service Address" class="w-full bg-brand-dark border border-brand-border p-3 text-sm mb-4 focus:border-brand-crimson outline-none">
-                <select class="w-full bg-brand-dark border border-brand-border p-3 text-sm mb-6 focus:border-brand-crimson outline-none text-gray-400">
-                    <option>Select Service Type...</option>
-                    <option>Weekly Valet</option>
-                    <option>Junk Removal</option>
-                    <option>Moving Support</option>
-                </select>
-                <button class="btn-primary w-full py-4 text-[0.7rem] font-bold uppercase tracking-widest text-white">Check Availability</button>
+                <div class="flex flex-col gap-2">
+                    <label class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Service Address</label>
+                    <input type="text" class="bg-brand-black border border-brand-border p-4 text-sm focus:border-brand-crimson outline-none transition">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Division</label>
+                    <select class="bg-brand-black border border-brand-border p-4 text-sm focus:border-brand-crimson outline-none transition text-gray-400">
+                        <option>Curb Logistics (Valet)</option>
+                        <option>Junk Removal Division</option>
+                        <option>Moving Support Division</option>
+                    </select>
+                </div>
+                <button class="w-full py-5 bg-brand-crimson text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white hover:bg-brand-crimsonHover transition mt-4">Submit Dispatch Request</button>
             </form>
         </div>
     </div>
 </section>
 
-<footer class="py-12 border-t border-brand-border text-center">
-    <span class="font-display text-gray-600 tracking-widest">© 2026 ALDER RESIDENTIAL SERVICES — CURB LOGISTICS DIVISION</span>
+<footer class="py-16 border-t border-brand-border bg-brand-black text-center">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-center gap-3 mb-8 opacity-50">
+            <div class="w-1 h-6 bg-brand-crimson"></div>
+            <span class="font-display text-lg tracking-widest text-white">ALDER <span class="text-brand-crimson text-sm">RESIDENTIAL</span></span>
+        </div>
+        <div class="text-[0.6rem] text-gray-600 font-bold uppercase tracking-[0.4em]">
+            © 2026 ALDER RESIDENTIAL — CURB LOGISTICS DIVISION &nbsp;|&nbsp; UTAH REGION HQ
+        </div>
+    </div>
 </footer>
 
 <script>
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
         });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
