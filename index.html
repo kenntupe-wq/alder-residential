@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alder Residential Services — Curb Logistics Division</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+brand: {
+black: '#0a0a0a',
+dark: '#111111',
+slate: '#1e2329',
+mid: '#2c3340',
+muted: '#6b7280',
+light: '#9ca3af',
+border: '#2a2f38',
+crimson: '#c0192c',
+crimsonHover: '#a01525',
+crimsonDim: '#7a0f1c',
+}
+},
+fontFamily: {
+display: ['Bebas Neue', 'sans-serif'],
+serif: ['DM Serif Display', 'serif'],
+body: ['DM Sans', 'sans-serif'],
+}
+}
+}
+}
+</script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: #0a0a0a; color: #e5e7eb; font-family: 'DM Sans', sans-serif; }
+
+```
+/* Noise texture overlay */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 0;
+opacity: 0.35;
+}
+
+/* Hero grid lines */
+.grid-bg {
+background-image:
+linear-gradient(rgba(192,25,44,0.07) 1px, transparent 1px),
+linear-gradient(90deg, rgba(192,25,44,0.07) 1px, transparent 1px);
+background-size: 80px 80px;
+}
+
+/* Animations */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(28px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@keyframes lineGrow {
+from { width: 0; }
+to { width: 64px; }
+}
+@keyframes pulse-glow {
+0%, 100% { box-shadow: 0 0 0 0 rgba(192,25,44,0.4); }
+50% { box-shadow: 0 0 18px 6px rgba(192,25,44,0.15); }
+}
+
+.fade-up { animation: fadeUp 0.75s ease both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.25s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.55s; }
+.delay-5 { animation-delay: 0.7s; }
+
+.btn-primary {
+background: #c0192c;
+color: #fff;
+font-family: 'DM Sans', sans-serif;
+font-weight: 600;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+font-size: 0.8rem;
+padding: 14px 36px;
+border: none;
+cursor: pointer;
+transition: background 0.2s, transform 0.15s;
+animation: pulse-glow 3s infinite;
+}
+.btn-primary:hover { background: #a01525; transform: translateY(-1px); }
+
+.btn-outline {
+border: 1px solid #c0192c;
+color: #c0192c;
+font-family: 'DM Sans', sans-serif;
+font-weight: 600;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+font-size: 0.8rem;
+padding: 13px 36px;
+cursor: pointer;
+transition: all 0.2s;
+background: transparent;
+}
+.btn-outline:hover { background: #c0192c; color: #fff; }
+
+.section-label {
+font-family: 'Bebas Neue', sans-serif;
+letter-spacing: 0.2em;
+color: #c0192c;
+font-size: 0.85rem;
+}
+
+.divider-line {
+display: inline-block;
+height: 1px;
+background: #c0192c;
+animation: lineGrow 0.6s ease both;
+}
+
+/* Tier cards */
+.tier-card {
+border: 1px solid #2a2f38;
+background: #111111;
+padding: 36px 28px;
+transition: border-color 0.25s, transform 0.2s;
+position: relative;
+}
+.tier-card:hover { border-color: #c0192c; transform: translateY(-3px); }
+.tier-card.featured {
+border-color: #c0192c;
+background: linear-gradient(160deg, #161b22 0%, #111111 100%);
+}
+.tier-card.featured::before {
+content: 'MOST POPULAR';
+position: absolute;
+top: -1px;
+left: 28px;
+background: #c0192c;
+color: #fff;
+font-family: 'DM Sans', sans-serif;
+font-size: 0.65rem;
+font-weight: 700;
+letter-spacing: 0.15em;
+padding: 4px 12px;
+}
+
+/* Nav */
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 100;
+background: rgba(10,10,10,0.92);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid #1e2329;
+}
+
+/* Stats bar */
+.stat-bar {
+background: #c0192c;
+}
+
+/* Trust badge */
+.trust-badge {
+border: 1px solid #2a2f38;
+background: #111;
+padding: 20px 24px;
+display: flex;
+align-items: center;
+gap: 16px;
+}
+
+/* Form */
+input, textarea, select {
+background: #111;
+border: 1px solid #2a2f38;
+color: #e5e7eb;
+padding: 12px 16px;
+font-family: 'DM Sans', sans-serif;
+font-size: 0.9rem;
+width: 100%;
+outline: none;
+transition: border-color 0.2s;
+}
+input:focus, textarea:focus, select:focus { border-color: #c0192c; }
+input::placeholder, textarea::placeholder { color: #4b5563; }
+
+/* Scroll reveal */
+.reveal {
+opacity: 0;
+transform: translateY(24px);
+transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* Crimson accent bar on sections */
+.accent-left { border-left: 3px solid #c0192c; padding-left: 20px; }
+
+/* Service icon bg */
+.icon-bg { background: rgba(192,25,44,0.1); border: 1px solid rgba(192,25,44,0.25); }
+```
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+<div style="max-width:1200px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:60px;">
+<div style="display:flex; align-items:center; gap:10px;">
+<div style="width:8px; height:28px; background:#c0192c;"></div>
+<span style="font-family:'Bebas Neue',sans-serif; font-size:1.25rem; letter-spacing:0.1em; color:#fff;">ALDER <span style="color:#c0192c;">RESIDENTIAL</span></span>
+</div>
+<div style="display:flex; align-items:center; gap:32px;">
+<a href="#services" style="color:#9ca3af; font-size:0.8rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9ca3af'">Services</a>
+<a href="#standard" style="color:#9ca3af; font-size:0.8rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9ca3af'">Standards</a>
+<a href="#contact" style="color:#9ca3af; font-size:0.8rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9ca3af'">Contact</a>
+<button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Check Availability</button>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+
+<section class="grid-bg" style="min-height:100vh; display:flex; align-items:center; padding-top:60px; position:relative; overflow:hidden;">
+<!-- Red glow -->
+<div style="position:absolute; top:30%; right:-10%; width:500px; height:500px; background:radial-gradient(circle, rgba(192,25,44,0.12) 0%, transparent 70%); pointer-events:none;"></div>
+
+<div style="max-width:1200px; margin:0 auto; padding:0 24px; width:100%;">
+<div style="max-width:780px;">
+<div class="fade-up delay-1" style="display:flex; align-items:center; gap:12px; margin-bottom:28px;">
+<span class="divider-line" style="width:40px; height:1px; background:#c0192c; display:inline-block;"></span>
+<span class="section-label">Curb Logistics Division — Utah</span>
+</div>
+
+```
+<h1 class="fade-up delay-2" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(3.5rem,8vw,6.5rem); line-height:0.95; letter-spacing:0.02em; color:#fff; margin-bottom:28px;">
+PREMIUM CURB<br/>
+<span style="color:#c0192c;">LOGISTICS</span><br/>
+FOR THE MODERN<br/>HOMEOWNER
+</h1>
+
+<p class="fade-up delay-3" style="font-size:1.05rem; color:#9ca3af; line-height:1.75; max-width:520px; margin-bottom:40px; font-weight:300;">
+We handle your 96-gallon bins — from garage to curb and back — on your schedule. Professional field technicians. Zero effort required from you.
+</p>
+
+<div class="fade-up delay-4" style="display:flex; gap:16px; flex-wrap:wrap;">
+<button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Check Availability</button>
+<button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">View Service Plans</button>
+</div>
+
+<div class="fade-up delay-5" style="margin-top:52px; display:flex; gap:40px; flex-wrap:wrap;">
+<div>
+<div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#fff; letter-spacing:0.05em;">3</div>
+<div style="font-size:0.75rem; color:#6b7280; letter-spacing:0.08em; text-transform:uppercase; font-weight:500;">Service Areas</div>
+</div>
+<div style="width:1px; background:#2a2f38;"></div>
+<div>
+<div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#fff; letter-spacing:0.05em;">100%</div>
+<div style="font-size:0.75rem; color:#6b7280; letter-spacing:0.08em; text-transform:uppercase; font-weight:500;">On-Time Rate</div>
+</div>
+<div style="width:1px; background:#2a2f38;"></div>
+<div>
+<div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#fff; letter-spacing:0.05em;">0</div>
+<div style="font-size:0.75rem; color:#6b7280; letter-spacing:0.08em; text-transform:uppercase; font-weight:500;">Missed Collections</div>
+</div>
+</div>
+</div>
+```
+
+</div>
+
+<!-- Service area pills -->
+
+<div style="position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; gap:12px; white-space:nowrap;">
+<span style="background:#1e2329; border:1px solid #2a2f38; color:#9ca3af; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; padding:6px 14px;">West Jordan, UT</span>
+<span style="background:#1e2329; border:1px solid #2a2f38; color:#9ca3af; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; padding:6px 14px;">South Jordan, UT</span>
+<span style="background:#1e2329; border:1px solid #c0192c; color:#c0192c; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; padding:6px 14px;">Draper, UT</span>
+</div>
+</section>
+
+<!-- PROBLEM / SOLUTION -->
+
+<section style="padding:100px 24px; background:#0d0d0d; position:relative; overflow:hidden;">
+<div style="max-width:1200px; margin:0 auto;">
+
+```
+<div class="reveal" style="margin-bottom:64px;">
+<span class="section-label">The Problem We Solve</span>
+<h2 style="font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3rem); color:#fff; margin-top:10px; max-width:600px; font-style:italic;">
+Your bin doesn't move itself. <span style="color:#c0192c;">We do.</span>
+</h2>
+</div>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:2px;">
+
+<div class="reveal" style="background:#111; padding:40px 32px;">
+<div class="icon-bg" style="width:48px; height:48px; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:1.4rem;">🧊</div>
+<h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.05em; color:#fff; margin-bottom:12px;">ICY DRIVEWAYS</h3>
+<p style="color:#6b7280; font-size:0.9rem; line-height:1.7; font-weight:300;">Utah winters mean black ice and steep grades. Dragging a 96-gallon bin shouldn't be a fall risk. Our techs handle it — regardless of weather conditions.</p>
+</div>
+
+<div class="reveal" style="background:#111; padding:40px 32px;">
+<div class="icon-bg" style="width:48px; height:48px; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:1.4rem;">🏠</div>
+<h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.05em; color:#fff; margin-bottom:12px;">AIRBNB CHAOS</h3>
+<p style="color:#6b7280; font-size:0.9rem; line-height:1.7; font-weight:300;">Guests shouldn't see overflowing bins or wonder where the trash goes. We sync with your rental calendar so logistics are invisible — exactly how it should be.</p>
+</div>
+
+<div class="reveal" style="background:#111; padding:40px 32px;">
+<div class="icon-bg" style="width:48px; height:48px; display:flex; align-items:center; justify-content:center; margin-bottom:24px; font-size:1.4rem;">⏰</div>
+<h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.05em; color:#fff; margin-bottom:12px;">FORGOTTEN DAYS</h3>
+<p style="color:#6b7280; font-size:0.9rem; line-height:1.7; font-weight:300;">A missed collection means two weeks of a smelly garage. Our route-based system means your bin is always at the curb — even when your schedule isn't.</p>
+</div>
+
+</div>
+
+<!-- Solution callout -->
+<div class="reveal" style="margin-top:48px; background:linear-gradient(135deg, #1a0b0e 0%, #110d0f 100%); border:1px solid rgba(192,25,44,0.3); padding:48px 40px; display:flex; align-items:center; gap:40px; flex-wrap:wrap;">
+<div style="flex:1; min-width:260px;">
+<div class="section-label" style="margin-bottom:10px;">Our Solution</div>
+<h3 style="font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.05em; color:#fff;">
+SCHEDULED, SILENT, PROFESSIONAL.
+</h3>
+</div>
+<div style="flex:2; min-width:280px;">
+<p style="color:#9ca3af; line-height:1.8; font-weight:300;">Alder Residential's Curb Logistics Division operates on a fixed weekly schedule. Your uniformed field tech moves bins to the curb before pickup and returns them after collection — every week, no reminders, no exceptions.</p>
+</div>
+</div>
+```
+
+</div>
+</section>
+
+<!-- SERVICE TIERS -->
+
+<section id="services" style="padding:100px 24px; background:#0a0a0a;">
+<div style="max-width:1200px; margin:0 auto;">
+
+```
+<div class="reveal" style="text-align:center; margin-bottom:64px;">
+<span class="section-label">Service Plans</span>
+<h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,5vw,3.8rem); letter-spacing:0.04em; color:#fff; margin-top:10px;">CHOOSE YOUR TIER</h2>
+<p style="color:#6b7280; max-width:480px; margin:12px auto 0; font-size:0.9rem; font-weight:300; line-height:1.7;">All plans include uniformed service, route confirmation notifications, and weekly reliability you can count on.</p>
+</div>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1px; background:#1e2329;">
+
+<!-- Tier 1 -->
+<div class="reveal tier-card" style="background:#0f0f0f;">
+<div style="font-family:'Bebas Neue',sans-serif; font-size:0.8rem; letter-spacing:0.2em; color:#6b7280; margin-bottom:16px;">PLAN 01</div>
+<h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.05em; color:#fff; margin-bottom:8px;">RESIDENTIAL VALET</h3>
+<p style="color:#6b7280; font-size:0.85rem; line-height:1.65; margin-bottom:28px; font-weight:300;">For the busy professional who wants zero friction on collection day. We move it out, we bring it back.</p>
+<div style="margin-bottom:28px;">
+<span style="font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:#fff; letter-spacing:0.03em;">$XX</span>
+<span style="color:#6b7280; font-size:0.85rem;">/month</span>
+</div>
+<ul style="list-style:none; margin-bottom:32px;">
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #1e2329; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Weekly bin-to-curb service</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #1e2329; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Post-collection return</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #1e2329; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Route confirmation text</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Up to 2 bins</li>
+</ul>
+<button class="btn-outline" style="width:100%;" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+</div>
+
+<!-- Tier 2 FEATURED -->
+<div class="reveal tier-card featured" style="padding-top:52px;">
+<div style="font-family:'Bebas Neue',sans-serif; font-size:0.8rem; letter-spacing:0.2em; color:#6b7280; margin-bottom:16px;">PLAN 02</div>
+<h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.05em; color:#fff; margin-bottom:8px;">SENIOR ASSISTANCE</h3>
+<p style="color:#6b7280; font-size:0.85rem; line-height:1.65; margin-bottom:28px; font-weight:300;">Built for seniors and mobility-limited residents. Safety-first service with a friendly, familiar face each week.</p>
+<div style="margin-bottom:28px;">
+<span style="font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:#fff; letter-spacing:0.03em;">$XX</span>
+<span style="color:#6b7280; font-size:0.85rem;">/month</span>
+</div>
+<ul style="list-style:none; margin-bottom:32px;">
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #2a2f38; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Everything in Residential</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #2a2f38; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Assigned consistent tech</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #2a2f38; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Family member notifications</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #2a2f38; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Side/back gate access</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Ice & weather priority</li>
+</ul>
+<button class="btn-primary" style="width:100%;" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+</div>
+
+<!-- Tier 3 -->
+<div class="reveal tier-card" style="background:#0f0f0f;">
+<div style="font-family:'Bebas Neue',sans-serif; font-size:0.8rem; letter-spacing:0.2em; color:#6b7280; margin-bottom:16px;">PLAN 03</div>
+<h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.05em; color:#fff; margin-bottom:8px;">STR LOGISTICS</h3>
+<p style="color:#6b7280; font-size:0.85rem; line-height:1.65; margin-bottom:28px; font-weight:300;">For Airbnb & short-term rental hosts. Stealth service synced with your rental calendar — guests never see the chaos.</p>
+<div style="margin-bottom:28px;">
+<span style="font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:#fff; letter-spacing:0.03em;">$XX</span>
+<span style="color:#6b7280; font-size:0.85rem;">/month</span>
+</div>
+<ul style="list-style:none; margin-bottom:32px;">
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #1e2329; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Everything in Residential</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #1e2329; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Calendar-synced scheduling</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; border-bottom:1px solid #1e2329; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Multi-property discount</li>
+<li style="color:#9ca3af; font-size:0.85rem; padding:8px 0; display:flex; align-items:center; gap:10px;"><span style="color:#c0192c; font-size:0.7rem;">▶</span> Host dashboard notifications</li>
+</ul>
+<button class="btn-outline" style="width:100%;" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+</div>
+
+</div>
+```
+
+</div>
+</section>
+
+<!-- ALDER STANDARD -->
+
+<section id="standard" style="padding:100px 24px; background:#0d0d0d; position:relative; overflow:hidden;">
+<div style="position:absolute; left:-200px; top:50%; transform:translateY(-50%); width:600px; height:600px; background:radial-gradient(circle, rgba(192,25,44,0.06) 0%, transparent 70%); pointer-events:none;"></div>
+
+<div style="max-width:1200px; margin:0 auto;">
+
+```
+<div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; flex-wrap:wrap;">
+
+<div>
+<span class="section-label">Our Commitment</span>
+<h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,5vw,3.8rem); letter-spacing:0.04em; color:#fff; margin:10px 0 28px; line-height:0.95;">THE ALDER<br/><span style="color:#c0192c;">STANDARD</span></h2>
+<p style="color:#6b7280; line-height:1.8; font-weight:300; margin-bottom:36px;">We don't send contractors in unmarked vans. Every Alder field tech shows up in a branded polo and hat, operates on a GPS-tracked route, and follows a verified completion checklist — every single time.</p>
+
+<div style="display:flex; flex-direction:column; gap:20px;">
+<div class="trust-badge">
+<div class="icon-bg" style="width:40px; height:40px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem;">👕</div>
+<div>
+<div style="font-weight:600; font-size:0.9rem; color:#e5e7eb; margin-bottom:3px;">Uniformed Field Technicians</div>
+<div style="color:#6b7280; font-size:0.8rem; font-weight:300;">Portwest polo + branded hat. Professional appearance, every route.</div>
+</div>
+</div>
+<div class="trust-badge">
+<div class="icon-bg" style="width:40px; height:40px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem;">📍</div>
+<div>
+<div style="font-weight:600; font-size:0.9rem; color:#e5e7eb; margin-bottom:3px;">Route Confirmation Notifications</div>
+<div style="color:#6b7280; font-size:0.8rem; font-weight:300;">You receive a text when your bin is moved and when it's returned.</div>
+</div>
+</div>
+<div class="trust-badge">
+<div class="icon-bg" style="width:40px; height:40px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem;">📋</div>
+<div>
+<div style="font-weight:600; font-size:0.9rem; color:#e5e7eb; margin-bottom:3px;">Verified Completion Checklist</div>
+<div style="color:#6b7280; font-size:0.8rem; font-weight:300;">Every service logged. No guesswork, no excuses.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div style="display:flex; flex-direction:column; gap:2px;">
+<div style="background:#111; padding:36px; border:1px solid #1e2329;">
+<div style="font-family:'Bebas Neue',sans-serif; font-size:3.5rem; color:#c0192c; letter-spacing:0.03em; line-height:1;">100%</div>
+<div style="color:#9ca3af; font-size:0.85rem; margin-top:6px; font-weight:300;">On-time route completion rate across all active service areas.</div>
+</div>
+<div style="background:#111; padding:36px; border:1px solid #1e2329;">
+<div style="font-family:'Bebas Neue',sans-serif; font-size:3.5rem; color:#c0192c; letter-spacing:0.03em; line-height:1;">3</div>
+<div style="color:#9ca3af; font-size:0.85rem; margin-top:6px; font-weight:300;">Dedicated service areas: West Jordan, South Jordan, and Draper.</div>
+</div>
+<div style="background:#111; padding:36px; border:1px solid #1e2329;">
+<div style="font-family:'Bebas Neue',sans-serif; font-size:3.5rem; color:#c0192c; letter-spacing:0.03em; line-height:1;">52</div>
+<div style="color:#9ca3af; font-size:0.85rem; margin-top:6px; font-weight:300;">Collection days per year. We're there for every single one.</div>
+</div>
+</div>
+
+</div>
+```
+
+</div>
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact" style="padding:100px 24px; background:#0a0a0a;">
+<div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; flex-wrap:wrap;">
+
+```
+<div class="reveal">
+<span class="section-label">Get In Touch</span>
+<h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,5vw,3.5rem); letter-spacing:0.04em; color:#fff; margin:10px 0 20px; line-height:0.95;">CHECK YOUR<br/><span style="color:#c0192c;">AVAILABILITY</span></h2>
+<p style="color:#6b7280; line-height:1.8; font-weight:300; margin-bottom:40px;">Enter your address to see if your home falls within our current service area. We'll follow up within 24 hours with plan options and pricing.</p>
+
+<div style="display:flex; flex-direction:column; gap:12px; margin-bottom:40px;">
+<div style="display:flex; align-items:center; gap:14px; color:#9ca3af; font-size:0.85rem;">
+<span style="color:#c0192c; font-size:0.7rem;">●</span>
+<span>West Jordan, UT — <strong style="color:#fff;">Active</strong></span>
+</div>
+<div style="display:flex; align-items:center; gap:14px; color:#9ca3af; font-size:0.85rem;">
+<span style="color:#c0192c; font-size:0.7rem;">●</span>
+<span>South Jordan, UT — <strong style="color:#fff;">Active</strong></span>
+</div>
+<div style="display:flex; align-items:center; gap:14px; color:#9ca3af; font-size:0.85rem;">
+<span style="color:#c0192c; font-size:0.7rem;">●</span>
+<span>Draper, UT — <strong style="color:#fff;">Active</strong></span>
+</div>
+</div>
+
+<div style="border:1px solid #2a2f38; padding:20px 24px; background:#111;">
+<div style="font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:#6b7280; margin-bottom:6px;">Phone / Text</div>
+<div style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.05em; color:#fff;">(XXX) XXX-XXXX</div>
+</div>
+</div>
+
+<div class="reveal">
+<form onsubmit="handleSubmit(event)" style="display:flex; flex-direction:column; gap:16px;">
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+<div>
+<label style="display:block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#6b7280; margin-bottom:6px;">First Name</label>
+<input type="text" placeholder="Kenneth" required />
+</div>
+<div>
+<label style="display:block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#6b7280; margin-bottom:6px;">Last Name</label>
+<input type="text" placeholder="Tupea" required />
+</div>
+</div>
+<div>
+<label style="display:block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#6b7280; margin-bottom:6px;">Email Address</label>
+<input type="email" placeholder="your@email.com" required />
+</div>
+<div>
+<label style="display:block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#6b7280; margin-bottom:6px;">Service Address</label>
+<input type="text" placeholder="123 Main St, West Jordan, UT" required />
+</div>
+<div>
+<label style="display:block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#6b7280; margin-bottom:6px;">Service Type</label>
+<select>
+<option value="" style="background:#111;">Select a plan...</option>
+<option value="residential" style="background:#111;">Residential Valet</option>
+<option value="senior" style="background:#111;">Senior Assistance</option>
+<option value="str" style="background:#111;">Short-Term Rental Logistics</option>
+</select>
+</div>
+<div>
+<label style="display:block; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#6b7280; margin-bottom:6px;">Additional Notes</label>
+<textarea rows="3" placeholder="Gate codes, special instructions, number of bins..."></textarea>
+</div>
+<button type="submit" class="btn-primary" style="width:100%; padding:16px;">Submit Request</button>
+<p style="color:#4b5563; font-size:0.75rem; text-align:center;">We respond within 24 hours. No spam, ever.</p>
+</form>
+</div>
+```
+
+</div>
+</section>
+
+<!-- FOOTER -->
+
+<footer style="border-top:1px solid #1e2329; padding:40px 24px; background:#0a0a0a;">
+<div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px;">
+<div style="display:flex; align-items:center; gap:10px;">
+<div style="width:6px; height:22px; background:#c0192c;"></div>
+<span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff;">ALDER <span style="color:#c0192c;">RESIDENTIAL SERVICES</span></span>
+</div>
+<div style="color:#4b5563; font-size:0.78rem; font-weight:300;">
+Curb Logistics Division &nbsp;·&nbsp; West Jordan · South Jordan · Draper, UT &nbsp;·&nbsp; © 2025 Alder Residential Services
+</div>
+</div>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('visible');
+}
+});
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// Form handler
+function handleSubmit(e) {
+e.preventDefault();
+const btn = e.target.querySelector('button[type="submit"]');
+btn.textContent = 'Request Received ✓';
+btn.style.background = '#1a3a1a';
+btn.style.animation = 'none';
+setTimeout(() => {
+btn.textContent = 'Submit Request';
+btn.style.background = '';
+btn.style.animation = '';
+e.target.reset();
+}, 3000);
+}
+
+// Mobile nav collapse
+if (window.innerWidth < 640) {
+const navLinks = document.querySelector('nav div:last-child');
+if (navLinks) {
+const links = navLinks.querySelectorAll('a');
+links.forEach(l => l.style.display = 'none');
+}
+}
+</script>
+
+</body>
+</html>
