@@ -2,35 +2,49 @@ export async function onRequestPost(context) {
   const { request, env } = context;
 
   try {
-    const { name, phone, address, plan } = await request.json();
+    const body = await request.json();
+    const { name, phone, address, plan } = body;
 
-    // We use the standard Fetch API because Cloudflare doesn't support 'require'
-    const stripeResponse = await fetch('https://api.stripe.com/v1/setup_intents', {
+    // Create Stripe customer
+    const customerRes = await fetch('https://api.stripe.com/v1/customers', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${env.STRIPE_SECRET_KEY}`,
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: new URLSearchParams({
-        'usage': 'off_session',
-        'metadata[customer_name]': name,
-        'metadata[customer_phone]': phone,
-        'metadata[customer_address]': address,
-        'metadata[selected_plan]': plan
+        name,
+        phone,
+        'address[line1]': address,
+        'metadata[plan]': plan
       })
     });
 
-    const data = await stripeResponse.json();
+    const customer = await customerRes.json();
+    if (customer.error) throw new Error(customer.error.message);
 
-    if (!stripeResponse.ok) {
-      return new Response(JSON.stringify({ error: data.error.message }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
+    // Create Setup Intent
+    const intentRes = await fetch('https://api.stripe.com/v1/setup_intents', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.STRIPE_SECRET_KEY}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        customer: customer.id,
+        'payment_method_types[]': 'card'
+      })
+    });
 
-    return new Response(JSON.stringify({ client_secret: data.client_secret }), {
-      headers: { 'Content-Type': 'application/json' }
+    const intent = await intentRes.json();
+    if (intent.error) throw new Error(intent.error.message);
+
+    return new Response(JSON.stringify({ client_secret: intent.client_secret }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
     });
 
   } catch (err) {
@@ -39,4 +53,14 @@ export async function onRequestPost(context) {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    }
+  });
 }
