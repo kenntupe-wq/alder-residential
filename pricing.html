@@ -1,188 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ALDER RESIDENTIAL — Book a Plan</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://js.stripe.com/v3/"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <style>
-        body { background: #080808; color: #e5e7eb; font-family: 'DM Sans', sans-serif; scroll-behavior: smooth; }
-        .grid-bg { background-image: radial-gradient(circle at 2px 2px, rgba(192,25,44,0.15) 1px, transparent 0); background-size: 40px 40px; }
-        .glass { background: rgba(14, 14, 14, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(192,25,44,0.1); }
-        .glow-red { box-shadow: 0 0 20px rgba(192,25,44,0.2); }
-        .plan-card { cursor: pointer; transition: all 0.2s; border: 1px solid rgba(192,25,44,0.1); }
-        .plan-card.selected { border: 2px solid #c0192c; box-shadow: 0 0 30px rgba(192,25,44,0.3); }
-        .plan-card:hover { border-color: #c0192c; }
-        #stripe-card-element { background: #080808; border: 1px solid #1f242d; padding: 16px; color: white; }
-        #stripe-card-element:focus { border-color: #c0192c; }
-        .step { display: none; }
-        .step.active { display: block; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
-    </style>
-</head>
-<body class="grid-bg">
-
-<!-- NAV -->
-<nav class="fixed top-0 w-full z-50 glass border-b border-white/5">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="index.html" class="flex items-center gap-3">
-            <div class="w-1.5 h-8 bg-[#c0192c] glow-red"></div>
-            <span class="font-display text-2xl tracking-widest text-white">ALDER <span class="text-[#c0192c]">RESIDENTIAL</span></span>
-        </a>
-        <a href="index.html" class="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-gray-400 hover:text-[#c0192c] transition">← Back to Home</a>
-    </div>
-</nav>
-
-<div class="pt-32 pb-20 px-6 min-h-screen">
-    <div class="max-w-4xl mx-auto">
-
-        <!-- HEADER -->
-        <div class="text-center mb-16">
-            <span class="font-display text-[#c0192c] tracking-[0.3em] text-sm">SECURE ENROLLMENT</span>
-            <h1 class="font-display text-6xl md:text-7xl text-white mt-4 leading-none">SELECT YOUR<br/><span class="text-[#c0192c]">VALET PLAN.</span></h1>
-            <p class="text-gray-500 mt-6 max-w-lg mx-auto">Choose your plan below. Your card will be saved securely and charged only at the time of service confirmation.</p>
-        </div>
-
-        <!-- STEP 1: PLAN SELECTION -->
-        <div id="step-1" class="step active">
-            <div class="grid md:grid-cols-3 gap-6 mb-10">
-
-                <!-- Senior Plan -->
-                <div class="plan-card glass p-8 rounded-none" onclick="selectPlan('senior', '$25/mo', 'Senior / Assist Plan')" id="card-senior">
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-4">Most Affordable</div>
-                    <h3 class="font-display text-2xl text-white mb-2">SENIOR / ASSIST</h3>
-                    <div class="font-display text-5xl text-[#c0192c] mb-6">$25<span class="text-sm text-gray-600 font-body">/mo</span></div>
-                    <ul class="text-gray-400 text-sm space-y-3 mb-8">
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#c0192c]"></div> Premium Care Standards</li>
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#c0192c]"></div> Family Status Alerts</li>
-                        <li class="flex items-center gap-2 text-white"><div class="w-1 h-1 bg-[#c0192c]"></div> 1 Free Annual Deep Clean</li>
-                    </ul>
-                    <div class="w-full py-3 border border-[#1f242d] text-[0.65rem] font-bold uppercase tracking-[0.2em] text-center text-gray-400 select-indicator">Click to Select</div>
-                </div>
-
-                <!-- Residential Plan -->
-                <div class="plan-card glass p-8 rounded-none border-[#c0192c]/50 glow-red transform md:scale-105 relative" onclick="selectPlan('residential', '$35/mo', 'Residential Plan')" id="card-residential">
-                    <div class="absolute top-0 left-0 bg-[#c0192c] text-[0.6rem] font-bold px-4 py-1.5 uppercase tracking-widest">Most Popular</div>
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-4 mt-4">Standard</div>
-                    <h3 class="font-display text-2xl text-white mb-2">RESIDENTIAL</h3>
-                    <div class="font-display text-5xl text-[#c0192c] mb-6">$35<span class="text-sm text-gray-600 font-body">/mo</span></div>
-                    <ul class="text-gray-400 text-sm space-y-3 mb-8">
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#c0192c]"></div> Weekly Bin Valet</li>
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#c0192c]"></div> Post-Collection Return</li>
-                        <li class="flex items-center gap-2 text-white"><div class="w-1 h-1 bg-[#c0192c]"></div> 1 Free Annual Deep Clean</li>
-                    </ul>
-                    <div class="w-full py-3 border border-[#1f242d] text-[0.65rem] font-bold uppercase tracking-[0.2em] text-center text-gray-400 select-indicator">Click to Select</div>
-                </div>
-
-                <!-- STR Plan -->
-                <div class="plan-card glass p-8 rounded-none" onclick="selectPlan('str', '$55/mo', 'STR Logistics Plan')" id="card-str">
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-4">Short-Term Rental</div>
-                    <h3 class="font-display text-2xl text-white mb-2">STR LOGISTICS</h3>
-                    <div class="font-display text-5xl text-[#c0192c] mb-6">$55<span class="text-sm text-gray-600 font-body">/mo</span></div>
-                    <ul class="text-gray-400 text-sm space-y-3 mb-8">
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#c0192c]"></div> Calendar Integration</li>
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#c0192c]"></div> Guest Privacy Shield</li>
-                        <li class="flex items-center gap-2 text-white"><div class="w-1 h-1 bg-[#c0192c]"></div> 1 Free Annual Deep Clean</li>
-                    </ul>
-                    <div class="w-full py-3 border border-[#1f242d] text-[0.65rem] font-bold uppercase tracking-[0.2em] text-center text-gray-400 select-indicator">Click to Select</div>
-                </div>
-            </div>
-
-            <div id="plan-error" class="hidden text-center text-[#c0192c] text-sm mb-4">Please select a plan to continue.</div>
-
-            <div class="text-center">
-                <button onclick="goToStep2()" class="bg-[#c0192c] px-16 py-5 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white hover:bg-[#a01525] transition glow-red">
-                    Continue to Booking →
-                </button>
-            </div>
-        </div>
-
-        <!-- STEP 2: INFO + CARD -->
-        <div id="step-2" class="step">
-            <div class="glass p-10 mb-6">
-
-                <!-- Selected Plan Summary -->
-                <div id="plan-summary" class="flex items-center justify-between mb-8 pb-8 border-b border-white/5">
-                    <div>
-                        <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-1">Selected Plan</div>
-                        <div id="summary-plan-name" class="font-display text-2xl text-white"></div>
-                    </div>
-                    <div class="text-right">
-                        <div id="summary-plan-price" class="font-display text-3xl text-[#c0192c]"></div>
-                        <button onclick="goToStep1()" class="text-[0.6rem] text-gray-500 uppercase tracking-widest hover:text-[#c0192c] transition mt-1">Change Plan</button>
-                    </div>
-                </div>
-
-                <!-- Customer Info -->
-                <div class="space-y-6 mb-8">
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-4">Your Information</div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[0.6rem] text-gray-500 uppercase tracking-widest">First Name</label>
-                            <input id="first-name" type="text" required class="bg-[#080808] border border-[#1f242d] p-4 text-sm focus:border-[#c0192c] outline-none transition text-white">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Last Name</label>
-                            <input id="last-name" type="text" required class="bg-[#080808] border border-[#1f242d] p-4 text-sm focus:border-[#c0192c] outline-none transition text-white">
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Phone Number</label>
-                        <input id="phone" type="tel" required class="bg-[#080808] border border-[#1f242d] p-4 text-sm focus:border-[#c0192c] outline-none transition text-white">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[0.6rem] text-gray-500 uppercase tracking-widest">Service Address</label>
-                        <input id="address" type="text" required class="bg-[#080808] border border-[#1f242d] p-4 text-sm focus:border-[#c0192c] outline-none transition text-white">
-                    </div>
-                </div>
-
-                <!-- Card Section -->
-                <div class="space-y-4">
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-4">Payment Information</div>
-                    <div id="stripe-card-element" class="bg-[#080808] border border-[#1f242d] p-4 transition focus-within:border-[#c0192c]"></div>
-                    <div id="card-errors" class="text-[#c0192c] text-xs mt-2 hidden"></div>
-                </div>
-
-                <!-- Disclaimer -->
-                <div class="mt-6 glass p-4 border-yellow-900/30">
-                    <p class="text-[0.65rem] text-gray-500 leading-relaxed">
-                        <span class="text-yellow-500 font-bold">⚠ IMPORTANT:</span> Your card will be securely saved but <strong class="text-white">NOT charged today.</strong> You will only be charged after Alder Residential contacts you to confirm your service start date. You may cancel before service begins with no charge.
-                    </p>
-                </div>
-
-                <!-- Submit -->
-                <button id="submit-btn" onclick="submitBooking()" class="w-full mt-8 py-5 bg-[#c0192c] text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white hover:bg-[#a01525] transition glow-red flex items-center justify-center gap-3">
-                    <span id="btn-text">Secure My Spot</span>
-                    <span id="btn-spinner" class="spinner hidden"></span>
-                </button>
-            </div>
-        </div>
-
-        <!-- STEP 3: SUCCESS -->
-        <div id="step-3" class="step">
-            <div class="glass p-16 text-center glow-red">
-                <div class="text-6xl mb-6">✅</div>
-                <span class="font-display text-[#c0192c] tracking-[0.3em] text-sm">ENROLLMENT COMPLETE</span>
-                <h2 class="font-display text-5xl text-white mt-4 mb-6">YOU'RE ON THE LIST.</h2>
-                <p class="text-gray-400 max-w-md mx-auto mb-4">Your spot is secured. Our field team will contact you within 24 hours to confirm your service start date.</p>
-                <p class="text-gray-600 text-xs mb-10">Your card has been saved securely. You will not be charged until your service is confirmed.</p>
-                <div class="glass p-6 mb-8 inline-block">
-                    <div class="text-[0.6rem] text-gray-500 uppercase tracking-widest mb-1">Questions? Call us</div>
-                    <a href="tel:3852560204" class="font-display text-3xl text-white hover:text-[#c0192c] transition">(385) 256-0204</a>
-                </div>
-                <br/>
-                <a href="index.html" class="text-[0.65rem] text-gray-500 uppercase tracking-widest hover:text-[#c0192c] transition">← Return to Home</a>
-            </div>
-        </div>
-
-    </div>
-</div>
-
 <script>
     // Init Stripe
     const stripe = Stripe('pk_live_51TDcSI0KrBqMi9flRG5XwMn2G8ENNGSavgBB11GlfWw9VMzGOkqc7eVHzjHBSAqDHmke7t40fhT3wHIhyKk0jfYj00yIzvhloh');
@@ -216,20 +31,20 @@
         selectedPrice = price;
         selectedName = name;
 
-        // Reset all cards
         document.querySelectorAll('.plan-card').forEach(c => {
             c.classList.remove('selected');
-            c.querySelector('.select-indicator').textContent = 'Click to Select';
-            c.querySelector('.select-indicator').classList.remove('text-white', 'border-[#c0192c]');
-            c.querySelector('.select-indicator').classList.add('text-gray-400');
+            const indicator = c.querySelector('.select-indicator');
+            indicator.textContent = 'Click to Select';
+            indicator.classList.remove('text-white', 'border-[#c0192c]');
+            indicator.classList.add('text-gray-400');
         });
 
-        // Highlight selected
         const card = document.getElementById('card-' + plan);
         card.classList.add('selected');
-        card.querySelector('.select-indicator').textContent = '✓ Selected';
-        card.querySelector('.select-indicator').classList.add('text-white', 'border-[#c0192c]');
-        card.querySelector('.select-indicator').classList.remove('text-gray-400');
+        const indicator = card.querySelector('.select-indicator');
+        indicator.textContent = '✓ Selected';
+        indicator.classList.add('text-white', 'border-[#c0192c]');
+        indicator.classList.remove('text-gray-400');
 
         document.getElementById('plan-error').classList.add('hidden');
     }
@@ -262,14 +77,13 @@
             return;
         }
 
-        // Show loading
         document.getElementById('btn-text').textContent = 'Processing...';
         document.getElementById('btn-spinner').classList.remove('hidden');
         document.getElementById('submit-btn').disabled = true;
 
         try {
-            // Call Netlify function to create setup intent
-            const res = await fetch('/api/create-setup-intent', {
+            // UPDATED PATH FOR CLOUDFLARE PAGES
+            const res = await fetch('/functions/create-setup-intent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -280,12 +94,10 @@
                 })
             });
 
-            const { clientSecret, error } = await res.json();
+            const data = await res.json();
+            if (data.error) throw new Error(data.error);
 
-            if (error) throw new Error(error);
-
-            // Confirm card setup with Stripe
-            const result = await stripe.confirmCardSetup(clientSecret, {
+            const result = await stripe.confirmCardSetup(data.client_secret, {
                 payment_method: {
                     card: cardElement,
                     billing_details: {
@@ -302,7 +114,6 @@
                 throw new Error(result.error.message);
             }
 
-            // Success
             document.getElementById('step-2').classList.remove('active');
             document.getElementById('step-3').classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -315,6 +126,3 @@
         }
     }
 </script>
-
-</body>
-</html>
