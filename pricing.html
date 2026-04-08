@@ -266,7 +266,7 @@
 
         try {
             // Call Cloudflare function to create setup intent
-            const res = await fetch('/functions/create-setup-intent', {
+            const res = await fetch('/create-setup-intent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
