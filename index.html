@@ -1,36 +1,111 @@
-<button onclick="checkRoute('West Jordan', 'MONDAYS & THURSDAYS')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">WEST JORDAN</span>
-    <div class="status-dot"></div>
-</button>
-<button onclick="checkRoute('South Jordan', 'TUESDAYS')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">SOUTH JORDAN</span>
-    <div class="status-dot"></div>
-</button>
-<button onclick="checkRoute('Draper', 'WEDNESDAYS')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">DRAPER</span>
-    <div class="status-dot"></div>
-</button>
-<button onclick="checkRoute('Sandy', 'TUESDAYS & WEDNESDAYS')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">SANDY</span>
-    <div class="status-dot"></div>
-</button>
-<button onclick="checkRoute('Riverton', 'TUESDAYS')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">RIVERTON</span>
-    <div class="status-dot"></div>
-</button>
-<button onclick="checkRoute('Herriman', 'WEDNESDAYS')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">HERRIMAN</span>
-    <div class="status-dot"></div>
-</button>
-<button onclick="checkRoute('Daybreak', 'FRIDAYS')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">DAYBREAK</span>
-    <div class="status-dot"></div>
-</button>
-<button onclick="checkRoute('Orem', 'MONDAY - THURSDAY (ZONED)')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">OREM</span>
-    <div class="status-dot"></div>
-</button>
-<button onclick="checkRoute('Park City', 'MONDAYS & FRIDAYS')" class="glass p-6 flex items-center justify-between group hover:border-brand-crimson transition w-full text-left">
-    <span class="font-display text-xl tracking-wider text-gray-300 group-hover:text-white">PARK CITY</span>
-    <div class="status-dot"></div>
-</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALDER RESIDENTIAL — Curb Logistics Division</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#080808',
+                            dark: '#0e0e0e',
+                            crimson: '#c0192c',
+                            slate: '#1e2329',
+                            border: '#1f242d',
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Bebas Neue', 'sans-serif'],
+                        body: ['DM Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #080808; color: #e5e7eb; font-family: 'DM Sans', sans-serif; scroll-behavior: smooth; }
+        .grid-bg { background-image: radial-gradient(circle at 2px 2px, rgba(192,25,44,0.15) 1px, transparent 0); background-size: 40px 40px; }
+        .glass { background: rgba(14, 14, 14, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(192,25,44,0.1); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .glow-red { box-shadow: 0 0 20px rgba(192,25,44,0.2); }
+        @keyframes pulse-red { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; animation: pulse-red 2s infinite; }
+        .status-dot-yellow { width: 8px; height: 8px; border-radius: 50%; background: #eab308; animation: pulse-red 2s infinite; }
+    </style>
+</head>
+<body class="grid-bg">
+
+<nav class="fixed top-0 w-full z-50 glass border-b border-brand-border">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-1.5 h-8 bg-brand-crimson glow-red"></div>
+            <span class="font-display text-2xl tracking-widest text-white">ALDER <span class="text-brand-crimson">RESIDENTIAL</span></span>
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-[0.6rem] font-bold uppercase tracking-[0.3em] text-gray-400">
+            <a href="#about" class="hover:text-brand-crimson transition">Origin</a>
+            <a href="#services" class="hover:text-brand-crimson transition">Plans</a>
+            <a href="#coverage" class="hover:text-brand-crimson transition">Coverage</a>
+            <a href="#contact" class="hover:text-brand-crimson transition">Dispatch</a>
+            <button onclick="alert('Secure Portal: Maintenance in progress.')" class="border border-brand-crimson px-3 py-1.5 text-brand-crimson text-[0.55rem] hover:bg-brand-crimson hover:text-white transition">CLIENT LOGIN</button>
+        </div>
+    </div>
+</nav>
+
+<section class="min-h-screen flex items-center pt-20 px-6 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto w-full relative z-10 text-center">
+        <div class="flex items-center justify-center gap-4 mb-6">
+            <div class="h-[1px] w-8 bg-brand-crimson"></div>
+            <span class="font-display text-brand-crimson tracking-[0.4em] text-xs">ESTABLISHED 2023 — UTAH DIVISION</span>
+            <div class="h-[1px] w-8 bg-brand-crimson"></div>
+        </div>
+        <h1 class="font-display text-6xl md:text-9xl leading-none text-white mb-8">
+            REDESIGNING THE<br/><span class="text-brand-crimson">LAST YARD.</span>
+        </h1>
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <div class="glass px-4 py-2 text-[0.6rem] font-bold tracking-widest text-gray-400 uppercase">✓ Fully Insured</div>
+            <div class="glass px-4 py-2 text-[0.6rem] font-bold tracking-widest text-gray-400 uppercase">✓ Background Verified</div>
+            <div class="glass px-4 py-2 text-[0.6rem] font-bold tracking-widest text-gray-400 uppercase">✓ Established 2023</div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-6">
+            <a href="#contact" class="bg-brand-crimson px-10 py-5 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white glow-red transition">Request Quote</a>
+            <a href="tel:3852560204" class="glass px-10 py-5 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white transition">24/7 Hotline</a>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="py-32 px-6 bg-brand-dark/50">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="reveal">
+            <span class="font-display text-brand-crimson tracking-[0.3em] text-sm uppercase">The Mission</span>
+            <h2 class="font-display text-5xl md:text-6xl text-white mt-4 mb-8 leading-none">BUILT ON<br/>PRECISION.</h2>
+            <p class="text-gray-400 text-lg leading-relaxed mb-6">Founded in <span class="text-white">2023</span>, Alder Residential was created to solve the "physical last yard." While home tech evolved, trash logistics remained stuck in the past. We fixed that.</p>
+            <p class="text-gray-400 text-lg leading-relaxed">What began in West Jordan has scaled into Utah's most reliable valet network, servicing thousands of routes with elite field-tech standards.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 reveal">
+            <div class="glass p-8 text-center"><div class="text-brand-crimson font-display text-4xl">2023</div><div class="text-[0.5rem] text-gray-500 uppercase tracking-widest">Founded</div></div>
+            <div class="glass p-8 text-center"><div class="text-white font-display text-4xl">1.5K+</div><div class="text-[0.5rem] text-gray-500 uppercase tracking-widest">Active Routes</div></div>
+            <div class="glass p-8 text-center"><div class="text-white font-display text-4xl">100%</div><div class="text-[0.5rem] text-gray-500 uppercase tracking-widest">Reliability</div></div>
+            <div class="glass p-8 text-center"><div class="text-brand-crimson font-display text-4xl">PRO</div><div class="text-[0.5rem] text-gray-500 uppercase tracking-widest">Certified</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="coverage" class="py-32 px-6">
+    <div class="max-w-7xl mx-auto text-center mb-16 reveal">
+        <span class="font-display text-brand-crimson tracking-[0.3em] uppercase">Operational Zones</span>
+        <h2 class="font-display text-5xl text-white mt-4">ACTIVE SECTORS</h2>
+        <p class="text-gray-500 mt-4">Select your city to view verified collection schedules.</p>
+    </div>
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+        <button onclick="showRoute('West Jordan', 'MON & THU')" class="glass p-6 flex justify-between items-center hover:border-brand-crimson transition group">
+            <span class="font-display text-lg tracking-widest text-gray-400 group-hover:text-white">WEST JORDAN</span><div class="status-dot"></div>
+        </button>
+        <button onclick="showRoute('South Jordan', 'TUESDAY')" class="glass p-6 flex justify-between items-center hover:border-brand-crimson transition group
