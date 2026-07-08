@@ -589,7 +589,7 @@
     <div class="section-head">
       <div class="eyebrow">Free Quote</div>
       <h2>Build your Mississippi home security quote</h2>
-      <p>Tell us a bit about your home and we'll put together a real, itemized quote. A local Alder specialist will call within 24 hours to confirm details.</p>
+      <p>Tell us a bit about your home and we'll put together a real, itemized quote based on exactly what you select below. We'll email your quote to the address you provide — no phone call required.</p>
     </div>
 
     <div class="quote-panel">
@@ -648,7 +648,7 @@
       </div>
 
       <button class="quote-submit" id="quoteBtn">Get My Free Quote</button>
-      <div class="quote-error" id="quoteError">Please select a home type and enter your name and phone number so we can send your quote.</div>
+      <div class="quote-error" id="quoteError">Please select a home type and enter your name, phone number, and email so we can send your quote.</div>
 
       <div class="quote-result" id="quoteResult">
         <div class="qr-badge">✓ Quote generated</div>
@@ -659,11 +659,11 @@
           </div>
           <div class="qr-price">
             <div class="num" id="qrActivation">$49<span>one-time</span></div>
-            <div class="lab">Activation & professional setup call</div>
+            <div class="lab">Activation & professional setup</div>
           </div>
         </div>
         <ul class="qr-includes" id="qrIncludes"></ul>
-        <p class="qr-note" id="qrNote">A local Alder Mississippi specialist will call the number you provided within 24 hours to confirm your system design and schedule shipping. No payment is required today.</p>
+        <p class="qr-note" id="qrNote">Your itemized quote has been emailed to you. No payment is required today — this pricing is based exactly on the home type, entry points, and add-ons you selected above.</p>
       </div>
     </div>
   </div>
@@ -917,23 +917,25 @@
   };
   const ADDON_COST = { camera: 6, doorbell: 5, medical: 8, smoke: 3 };
 
-  function randRange(min, max){ return Math.random() * (max - min) + min; }
+  // Base monthly monitoring rate by property type — reflects typical system size per home type
+  const BASE_MONTHLY = { House: 34.99, Townhouse: 32.99, Condo: 29.99, Apartment: 29.99, Other: 32.99 };
+  // Base equipment package cost by property type
+  const BASE_EQUIPMENT = { House: 249, Townhouse: 229, Condo: 199, Apartment: 199, Other: 219 };
 
   function buildQuote(){
-    // Base monitoring fee varies slightly per quote, like a real rep quoting a range
-    let monthly = randRange(29.99, 34.99);
-    // Entry point sensors beyond the first 2 included add a small monthly device fee
-    const extraDoors = Math.max(0, quoteState.doors - 2);
-    monthly += extraDoors * 1.25;
-    // Add-on device fees
-    let addonCost = 0;
-    quoteState.addons.forEach(a => { addonCost += ADDON_COST[a]; });
-    monthly += addonCost;
-    monthly = Math.min(monthly, 64.99);
-    monthly = Math.round(monthly * 100) / 100;
+    const property = quoteState.property;
+    const extraDoors = Math.max(0, quoteState.doors - 2); // first 2 entry points included in base price
 
-    // Equipment package estimate — real Alder-style range $199-$499 depending on kit size
-    let equipment = 199 + (extraDoors * 18) + (quoteState.addons.size * 35);
+    // Monthly monitoring price = base rate + per-sensor device fee + add-on device fees
+    let monthly = BASE_MONTHLY[property];
+    monthly += extraDoors * 1.25;
+    let addonMonthly = 0;
+    quoteState.addons.forEach(a => { addonMonthly += ADDON_COST[a]; });
+    monthly += addonMonthly;
+    monthly = Math.min(Math.round(monthly * 100) / 100, 64.99);
+
+    // Equipment package cost = base kit + per extra sensor + per add-on device
+    let equipment = BASE_EQUIPMENT[property] + (extraDoors * 15) + (quoteState.addons.size * 30);
     equipment = Math.min(Math.round(equipment / 10) * 10, 499);
 
     const activation = 49;
@@ -945,9 +947,11 @@
     const first = document.getElementById('qFirst').value.trim();
     const last = document.getElementById('qLast').value.trim();
     const phone = document.getElementById('qPhone').value.trim();
+    const email = document.getElementById('qEmail').value.trim();
     const errEl = document.getElementById('quoteError');
 
-    if(!quoteState.property || !first || !phone){
+    if(!quoteState.property || !first || !phone || !email){
+      errEl.textContent = 'Please select a home type and enter your name, phone number, and email so we can send your quote.';
       errEl.classList.add('visible');
       return;
     }
@@ -965,7 +969,7 @@
     ).join('');
 
     document.getElementById('qrNote').textContent =
-      `Thanks ${first}! A local Alder Mississippi specialist will call ${phone} within 24 hours to confirm your ${quoteState.property.toLowerCase()} system design, finalize pricing, and schedule your ${q.equipment >= 300 ? '2-day' : '2-day'} shipment. No payment is required today.`;
+      `Thanks ${first}! We've emailed this itemized quote to ${email} for your ${property.toLowerCase()}. No payment is required today.`;
 
     document.getElementById('quoteResult').classList.add('visible');
     document.getElementById('quoteResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1064,10 +1068,6 @@
   els.btn.addEventListener('click', handleTrack);
   els.input.addEventListener('keydown', (e) => { if(e.key === 'Enter') handleTrack(); });
 
-  window.addEventListener('DOMContentLoaded', () => {
-    els.input.value = '1Z9X4A2W0392847561';
-    handleTrack();
-  });
 </script>
 
 </body>
