@@ -680,7 +680,7 @@
 
     <div class="track-panel">
       <div class="track-form">
-        <input type="text" id="trackInput" placeholder="Enter tracking number " autocomplete="off">
+        <input type="text" id="trackInput" placeholder="Enter tracking number (e.g. 1Z9X4A2W0392847561)" autocomplete="off">
         <button id="trackBtn">Track Package</button>
       </div>
 
@@ -982,13 +982,13 @@
       carrierClass: "carrier-ups",
       customer: "Robert Jeems",
       address: "911 Cherry Street, Greenwood, MS 38930",
-      status: "out_for_delivery",
+      status: "shipped",
       eta: "Arriving Friday, July 10 <span>after 8:00 PM</span>",
       history: [
         { title: "Order placed", detail: "Jul 8, 9:14 AM \u2014 Greenwood, MS", state: "done" },
-        { title: "Shipped from Alder fulfillment center", detail: "Jul 8, 6:02 PM \u2014 Memphis, TN", state: "done" },
-        { title: "Arrived at UPS facility", detail: "Jul 9, 11:47 PM \u2014 Memphis, TN", state: "done" },
-        { title: "Out for delivery", detail: "Jul 10, 7:32 AM \u2014 Greenwood, MS", state: "current" },
+        { title: "Shipped from Alder fulfillment center", detail: "Jul 8, 6:02 PM \u2014 Memphis, TN", state: "current" },
+        { title: "Arrived at UPS facility", detail: "Expected Jul 9 \u2014 Memphis, TN", state: "pending" },
+        { title: "Out for delivery", detail: "Expected Jul 10 \u2014 Greenwood, MS", state: "pending" },
         { title: "Delivered", detail: "Expected after 8:00 PM on Jul 10", state: "pending" }
       ]
     }
