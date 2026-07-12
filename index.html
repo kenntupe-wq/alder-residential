@@ -325,6 +325,7 @@
     margin-bottom:10px;
   }
   .tr-status-badge.delivered{background:rgba(46,124,246,0.14); color:var(--blue);}
+  .tr-status-badge.delayed{background:rgba(211,71,44,0.12); color:#B3452C;}
   .tr-status-badge .dot{width:7px;height:7px;border-radius:50%; background:currentColor;}
   .tr-eta{font-size:22px; font-weight:800; color:var(--navy);}
   .tr-eta span{font-weight:500; color:var(--slate); font-size:14px;}
@@ -355,10 +356,12 @@
   }
   .tl-item.done .tl-dot{background:var(--blue-bright);}
   .tl-item.current .tl-dot{background:var(--amber); box-shadow:0 0 0 5px rgba(232,163,61,0.18);}
+  .tl-item.delayed .tl-dot{background:#D3472C; box-shadow:0 0 0 5px rgba(211,71,44,0.16);}
   .tl-dot svg{width:14px; height:14px; stroke:#fff;}
   .tl-content h4{margin:0 0 3px; font-size:14.5px; color:var(--ink); font-weight:700;}
-  .tl-item:not(.done):not(.current) .tl-content h4{color:var(--slate); font-weight:600;}
+  .tl-item:not(.done):not(.current):not(.delayed) .tl-content h4{color:var(--slate); font-weight:600;}
   .tl-content p{margin:0; font-size:13px; color:var(--slate);}
+  .tl-content p.delay-note{color:#B3452C; font-weight:600;}
 
   .tr-items{
     display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px;
@@ -385,6 +388,15 @@
     padding:14px 18px; border-radius:10px; font-size:14px; display:none;
   }
   .track-error.visible{display:block;}
+
+  /* delay banner inside result */
+  .tr-delay-banner{
+    display:flex; align-items:flex-start; gap:12px;
+    background:#FDF2EE; border:1px solid #F3CFC1; color:#8A3A25;
+    padding:14px 16px; border-radius:12px; margin-bottom:24px; font-size:13.5px; line-height:1.6;
+  }
+  .tr-delay-banner svg{width:18px;height:18px; stroke:#D3472C; flex-shrink:0; margin-top:1px;}
+  .tr-delay-banner strong{color:#7A3120;}
 
   /* TRUST STRIP */
   .trust-strip{background:var(--paper); border-bottom:1px solid var(--line);}
@@ -700,6 +712,11 @@
           </div>
         </div>
 
+        <div class="tr-delay-banner" id="delayBanner" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          <div><strong>This shipment has been delayed.</strong> A carrier disruption has pushed back delivery. We'll keep this page updated as new information comes in — no action is needed on your end.</div>
+        </div>
+
         <div class="timeline" id="timeline">
           <!-- filled by JS -->
         </div>
@@ -982,14 +999,15 @@
       carrierClass: "carrier-ups",
       customer: "Robert Jeems",
       address: "911 Cherry Street, Greenwood, MS 38930",
-      status: "shipped",
-      eta: "Arriving Friday, July 10 <span>after 8:00 PM</span>",
+      status: "delayed",
+      eta: "Delayed \u2014 now arriving Thursday, July 16 <span>by end of day</span>",
       history: [
         { title: "Order placed", detail: "Jul 8, 9:14 AM \u2014 Greenwood, MS", state: "done" },
-        { title: "Shipped from Alder fulfillment center", detail: "Jul 8, 6:02 PM \u2014 Memphis, TN", state: "current" },
-        { title: "Arrived at UPS facility", detail: "Expected Jul 9 \u2014 Memphis, TN", state: "pending" },
-        { title: "Out for delivery", detail: "Expected Jul 10 \u2014 Greenwood, MS", state: "pending" },
-        { title: "Delivered", detail: "Expected after 8:00 PM on Jul 10", state: "pending" }
+        { title: "Shipped from Alder fulfillment center", detail: "Jul 8, 6:02 PM \u2014 Memphis, TN", state: "done" },
+        { title: "Arrived at UPS facility", detail: "Jul 9, 11:47 AM \u2014 Memphis, TN", state: "done" },
+        { title: "Delivery delayed", detail: "Jul 11 \u2014 Carrier disruption at Memphis, TN facility. New estimated delivery: Thursday, July 16.", state: "delayed", delayNote: true },
+        { title: "Out for delivery", detail: "Expected Jul 16 \u2014 Greenwood, MS", state: "pending" },
+        { title: "Delivered", detail: "Expected by end of day on Jul 16", state: "pending" }
       ]
     }
   };
@@ -1003,23 +1021,29 @@
     eta: document.getElementById('etaText'),
     carrierTag: document.getElementById('carrierTag'),
     trackNumOut: document.getElementById('trackNumOut'),
-    timeline: document.getElementById('timeline')
+    timeline: document.getElementById('timeline'),
+    delayBanner: document.getElementById('delayBanner')
   };
 
   const iconCheck = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
   const iconTruck = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="7" width="13" height="10"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="6" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg>';
+  const iconAlert = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4M12 16h.01"/></svg>';
 
   function renderTimeline(history){
     els.timeline.innerHTML = history.map((h, i) => {
       const isLast = i === history.length - 1;
-      const dotIcon = h.state === 'done' ? iconCheck : (h.state === 'current' ? iconTruck : '');
+      let dotIcon = '';
+      if(h.state === 'done') dotIcon = iconCheck;
+      else if(h.state === 'current') dotIcon = iconTruck;
+      else if(h.state === 'delayed') dotIcon = iconAlert;
+      const stateClass = h.state === 'done' ? 'done' : (h.state === 'current' ? 'current' : (h.state === 'delayed' ? 'delayed' : ''));
       return `
-        <div class="tl-item ${h.state === 'done' ? 'done' : ''} ${h.state === 'current' ? 'current' : ''}">
+        <div class="tl-item ${stateClass}">
           ${!isLast ? '<div class="tl-line"></div>' : ''}
           <div class="tl-dot">${dotIcon}</div>
           <div class="tl-content">
             <h4>${h.title}</h4>
-            <p>${h.detail}</p>
+            <p${h.delayNote ? ' class="delay-note"' : ''}>${h.detail}</p>
           </div>
         </div>`;
     }).join('');
@@ -1033,7 +1057,8 @@
       out_for_delivery: { label: 'Out for Delivery', cls: '' },
       delivered: { label: 'Delivered', cls: 'delivered' },
       shipped: { label: 'In Transit', cls: '' },
-      ordered: { label: 'Order Processing', cls: '' }
+      ordered: { label: 'Order Processing', cls: '' },
+      delayed: { label: 'Delayed', cls: 'delayed' }
     };
     const s = statusMap[data.status] || statusMap.shipped;
     els.badge.className = 'tr-status-badge ' + s.cls;
@@ -1042,6 +1067,8 @@
     els.carrierTag.className = 'carrier-tag ' + data.carrierClass;
     els.carrierTag.textContent = data.carrier;
     els.trackNumOut.textContent = trackingNum;
+
+    els.delayBanner.style.display = data.status === 'delayed' ? 'flex' : 'none';
 
     renderTimeline(data.history);
     els.result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
